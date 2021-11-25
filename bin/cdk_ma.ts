@@ -6,6 +6,9 @@ import { VpcStack } from "../libs/vpc/vpc-stack";
 // import { Peer, Port } from "@aws-cdk/aws-ec2";
 // import { Ec2Stack } from "../libs/ec2/ec2-stack";
 import { Ec2BastionStack } from "../libs/ec2/ec2-bastion-stack";
+import { Ec2PrivateStack } from "../libs/ec2/ec2-private-stack";
+import { AlbStack } from "../libs/alb/alb-stack";
+import { AutoScalingGroupStack } from "../libs/autoScale/auto-scale-stack";
 
 const app = new cdk.App();
 
@@ -25,72 +28,25 @@ const bastionStack = new Ec2BastionStack(app, "Ec2BastionStack", {
   description: "EC2 BastionStack",
 });
 
-// //sg for bastion public
-// const sgBastion = new SgStack(app, "SgForBastionStack", {
-//   env,
-//   description: "Sg for bastion",
-//   vpc: vpcStack.vpc,
-//   name: "SgForBastionStack",
-//   securityGroupName: "SgForBastionStack"
-// });
-// sgBastion.securityGroup.addIngressRule(
-//   Peer.anyIpv4(),
-//   Port.tcp(22),
-//   "SSH frm anywhere"
-// );
-// sgBastion.securityGroup.addIngressRule(
-//   Peer.anyIpv4(),
-//   Port.tcp(80),
-//   "PORT 80 for HTTP"
-// );
+const privateStack = new Ec2PrivateStack(app, "Ec2PrivateStack", {
+  env,
+  vpc: vpcStack.vpc,
+  description: "EC2 PrivateStack",
+});
 
-// // // sg for Alb
-// const sgAlb = new SgStack(app, "SgForAlbStack", {
-//   env,
-//   description: "Sg for alb",
-//   vpc: vpcStack.vpc,
-//   name: "SgForAlbStack",
-//   securityGroupName: "SgForAlbStack"
-// });
-// sgBastion.securityGroup.addIngressRule(
-//   Peer.anyIpv4(),
-//   Port.tcp(80),
-//   "PORT 80 for HTTP"
-// );
+const albStack = new AlbStack(app, "AlbStack", {
+  env,
+  vpc: vpcStack.vpc,
+  description: "AlbStack",
+  privateStack: privateStack.instance,
+});
 
-// // sg for private
-// const sgPrivate = new SgStack(app, "SgForPrivate", {
-//   env,
-//   description: "Sg for private",
-//   vpc: vpcStack.vpc,
-//   name: "SgForPrivate",
-//   securityGroupName: "SgForPrivate"
-// });
-// sgPrivate.securityGroup.addIngressRule(
-//   Peer.anyIpv4(),
-//   Port.tcp(22),
-//   "SSH frm anywhere"
+// const autoScalingGroupStack = new AutoScalingGroupStack(
+//   app,
+//   "AutoScalingGroupAlbStack",
+//   {
+//     env,
+//     vpc: vpcStack.vpc,
+//     description: "AutoScalingGroupAlbStack",
+//   }
 // );
-// sgPrivate.securityGroup.addIngressRule(
-//   Peer.anyIpv4(),
-//   Port.tcp(80),
-//   "PORT 80 for HTTP"
-// );
-
-// // // create ec2 bastion
-// // const ec2Bastion = new Ec2Stack(app, "Ec2Bastion", {
-// //   env,
-// //   vpc: vpcStack.vpc,
-// //   description: "Ec2 bastion",
-// //   securityGroup: sgBastion,
-// //   useData: userData,
-// // });
-
-// // // create ec2 private
-// // const ec2Private = new Ec2Stack(app, "Ec2Private", {
-// //   env,
-// //   vpc: vpcStack.vpc,
-// //   description: "Ec2 private",
-// //   securityGroup: sgBastion,
-// //   useData: userData,
-// // });
