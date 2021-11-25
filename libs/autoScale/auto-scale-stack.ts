@@ -1,5 +1,5 @@
 import { AutoScalingGroup } from "@aws-cdk/aws-autoscaling";
-import { AmazonLinuxImage, InstanceClass, InstanceSize, InstanceType, SecurityGroup, Vpc } from "@aws-cdk/aws-ec2";
+import { AmazonLinuxImage, InstanceClass, InstanceSize, InstanceType, Peer, Port, SecurityGroup, Vpc } from "@aws-cdk/aws-ec2";
 import * as cdk from "@aws-cdk/core";
 
 export interface AutoScalingGroupStackProps extends cdk.StackProps {
@@ -19,7 +19,17 @@ export class AutoScalingGroupStack extends cdk.Stack {
     super(scope, id, props);
     this.props = props;
 
+    this.buildSecurityGroup();
     this.buildAutoScalingGroup();
+  }
+
+  private buildSecurityGroup() {
+    this.securityGroup = new SecurityGroup(this, "SgForAutoScaling", {
+      vpc: this.props.vpc,
+      allowAllOutbound: true,
+    });
+    this.securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
+    this.securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
   }
 
   private buildAutoScalingGroup() {

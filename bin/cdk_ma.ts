@@ -41,12 +41,12 @@ const albStack = new AlbStack(app, "AlbStack", {
   privateStack: privateStack.instance,
 });
 
-// const autoScalingGroupStack = new AutoScalingGroupStack(
-//   app,
-//   "AutoScalingGroupAlbStack",
-//   {
-//     env,
-//     vpc: vpcStack.vpc,
-//     description: "AutoScalingGroupAlbStack",
-//   }
-// );
+const autoScalingGroupStack = new AutoScalingGroupStack(
+  app,
+  "AutoScalingGroupAlbStack",
+  {
+    env,
+    vpc: vpcStack.vpc,
+    description: "AutoScalingGroupAlbStack",
+  }
+);
