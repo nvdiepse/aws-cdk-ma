@@ -12,8 +12,8 @@ export class VpcStack extends Stack {
   private buildVpcStack() {
     this.vpc = new Vpc(this, getServiceName("vpc"), {
       cidr: "10.0.0.0/16",
-      maxAzs: 2,
-      natGateways: 1,
+      maxAzs: 2, 
+      natGateways: 1, // nat for private 
       subnetConfiguration: [
         {
           cidrMask: 28,
