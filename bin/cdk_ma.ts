@@ -8,6 +8,8 @@ import { VpcStack } from '../libs/vpc/vpc-stack';
 import { Ec2BastionStack } from '../libs/ec2/ec2-bastion-stack';
 import { Ec2PrivateStack } from '../libs/ec2/ec2-private-stack';
 import { AlbStack } from '../libs/alb/alb-stack';
+import { CodeBuildStack } from '../libs/codebuild/codebuild-stack';
+import { WebStack } from '../libs/ec2/web-stack';
 // import { AutoScalingGroupStack } from '../libs/autoScale/auto-scale-stack';
 
 const app = new cdk.App();
@@ -41,6 +43,12 @@ const albStack = new AlbStack(app, 'AlbStack', {
   privateStack: privateStack.instance,
 });
 
+const codebuild = new CodeBuildStack(app, 'CodeBuildStack', {
+  env,
+  vpc: vpcStack.vpc,
+  description: 'Codebuild Stack',
+})
+
 // const autoScalingGroupStack = new AutoScalingGroupStack(
 //   app,
 //   "AutoScalingGroupAlbStack",
@@ -50,3 +58,9 @@ const albStack = new AlbStack(app, 'AlbStack', {
 //     description: "AutoScalingGroupAlbStack",
 //   }
 // );
+
+const webStack = new WebStack(app, 'WebStack', {
+  env,
+  vpc: vpcStack.vpc,
+  description: 'Web Stack',
+})

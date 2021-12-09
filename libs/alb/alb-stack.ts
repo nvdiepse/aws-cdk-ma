@@ -1,7 +1,7 @@
 import { Instance, Peer, Port, SecurityGroup, SubnetType, Vpc } from "@aws-cdk/aws-ec2";
 import { ApplicationLoadBalancer } from "@aws-cdk/aws-elasticloadbalancingv2";
 import * as cdk from "@aws-cdk/core";
-import { SgAlbStack } from "./sg-alb-stack";
+// import { SgAlbStack } from "./sg-alb-stack";
 import { InstanceIdTarget } from "@aws-cdk/aws-elasticloadbalancingv2-targets";
 export interface AlbStackProps extends cdk.StackProps {
   readonly vpc: Vpc;

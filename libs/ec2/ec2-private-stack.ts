@@ -13,7 +13,7 @@ import {
   Vpc,
 } from "@aws-cdk/aws-ec2";
 import * as cdk from "@aws-cdk/core";
-import { SgAlbStack } from "../alb/sg-alb-stack";
+// import { SgAlbStack } from "../alb/sg-alb-stack";
 import { Ec2BastionStack } from "../ec2/ec2-bastion-stack";
 // import * as Ec2BastionStack from "../ec2/ec2-bastion-stack";
 

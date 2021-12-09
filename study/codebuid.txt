@@ -1,0 +1,17 @@
+2 phần.
+  1 Taọ infra
+    - vpx, subnet, sg
+  2 Build web 
+    - alb, autoscaling, image(có thể viết CDK tạo)
+
+    ===== CONSOLE =====
+      - init ec2 => cài căsm => build image
+
+    ==== CODE BUILD ====
+      - Tạo codecommit  => source cdk
+                        => source web
+      - repo
+      - command
+        tạo image: tạo ec2 =>
+        tạo alb
+        tạo autoscaling
