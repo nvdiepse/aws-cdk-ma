@@ -8,6 +8,7 @@ import {
   Role,
   ServicePrincipal,
 } from '@aws-cdk/aws-iam';
+import { WebStack } from '../ec2/web-stack';
 
 export interface CodeBuildStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
@@ -33,7 +34,7 @@ export class CodeBuildStack extends cdk.Stack {
       new PolicyStatement({
         effect: Effect.ALLOW,
         resources: ['*'], //
-        actions: [' *'], // những quyền dc dùng
+        actions: ['*'], // những quyền dc dùng
       }),
       // managedPolicies: [] //
     );
@@ -43,6 +44,7 @@ export class CodeBuildStack extends cdk.Stack {
         phases: {
           build: {
             commands: [
+              'export VERSION=$(date +\\%Y\\%m\\%d\\%H\\%M\\%S)',
               'echo "=== CODE BUILD ==="',
               'apt update -y',
               'apt install nodejs -y',
@@ -54,6 +56,13 @@ export class CodeBuildStack extends cdk.Stack {
               'git clone https://github.com/nvdiepse/aws-cdk-ma.git',
               'cd aws-cdk-ma && npm install',
               'cdk deploy WebStack --require-approval never',
+              // `export INSTANCE_ID=$(aws cloudformation describe-stacks --stack-name WebStack --output text --query="Stacks[0].Outputs[?OutputKey=='InstanceId'].OutputValue")`,
+              // 'export AMI_NAME=web-ami-$VERSION',
+              // `export AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name $AMI_NAME --output text)`,
+              // 'aws ec2 wait image-available --image-ids $AMI_ID', // timeout wait image init
+              // 'cdk destroy WebStack --force',
+              // 'export WEBSYSTEM_STACK_NAME=websystem-stack-$VERSION',
+              // 'cdk deploy websystem-stack --require-approval never',
             ],
           },
         },
