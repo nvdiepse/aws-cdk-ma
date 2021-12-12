@@ -70,7 +70,11 @@ export class CodeBuildStack extends cdk.Stack {
       environment: {
         buildImage: LinuxBuildImage.STANDARD_5_0,
       },
-      environmentVariables: {},
+      environmentVariables: {
+        VERSION_ID: {
+          value: "set version here"
+        }
+      },
       projectName: `${getServiceName('codebuild')}`,
       role: adminAccessRole,
     });
