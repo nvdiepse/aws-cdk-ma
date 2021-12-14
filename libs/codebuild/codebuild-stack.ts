@@ -62,6 +62,7 @@ export class CodeBuildStack extends cdk.Stack {
               'cdk destroy WebStack --force',
               `export WEB_STACK_NAME=WebStack-$VERSION_ID`,
               `echo $VERSION_ID`,
+              'echo WEB_STACK_NAME = $WEB_STACK_NAME',
               'cdk deploy AlbStack --require-approval never',
             ],
           },
