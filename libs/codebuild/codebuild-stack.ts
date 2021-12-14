@@ -55,7 +55,7 @@ export class CodeBuildStack extends cdk.Stack {
               'git clone https://github.com/nvdiepse/aws-cdk-ma.git',
               'cd aws-cdk-ma && npm install',
               'cdk deploy WebStack --require-approval never',
-              `export INSTANCE_ID=$(aws cloudformation describe-stacks --stack-name WebStack --output text --query="Stacks[0].Outputs[?OutputKey=='instanceId'].OutputValue")`,
+              `export INSTANCE_ID=$(aws cloudformation describe-stacks --stack-name WebStack --output text --query="Stacks[0].Outputs[?OutputKey=='webinstanceid'].OutputValue")`,
               'export AMI_NAME=web-ami-$VERSION_ID',
               `export AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name $AMI_NAME --output text)`,
               `aws ec2 wait image-available --image-ids $AMI_ID`, // time init

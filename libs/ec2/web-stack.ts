@@ -34,7 +34,7 @@ export class WebStack extends cdk.Stack {
 
     new cdk.CfnOutput(this, 'web-instance-id', {
       value: this.instance.instanceId,
-      exportName: 'instanceId',
+      exportName: 'webInstanceId',
     });
   }
   private initUserData() {
