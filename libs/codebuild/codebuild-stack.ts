@@ -61,7 +61,8 @@ export class CodeBuildStack extends cdk.Stack {
               'aws ec2 wait image-available --image-ids $AMI_ID', // time init
               'cdk destroy WebStack --force',
               `export WEB_STACK_NAME=WebStack-$VERSION_ID`,
-              `echo $VERSION_ID`,
+              'echo INSTANCE_ID = $INSTANCE_ID',
+              'echo AMI_ID = $AMI_ID',
               'echo WEB_STACK_NAME = $WEB_STACK_NAME',
               'cdk deploy AlbStack --require-approval never',
             ],
