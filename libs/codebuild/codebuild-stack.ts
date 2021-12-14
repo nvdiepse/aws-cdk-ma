@@ -64,6 +64,7 @@ export class CodeBuildStack extends cdk.Stack {
               'echo INSTANCE_ID = $INSTANCE_ID',
               'echo AMI_ID = $AMI_ID',
               'echo WEB_STACK_NAME = $WEB_STACK_NAME',
+              'cdk deploy AutoScalingGroupAlbStack --require-approval never',
               'cdk deploy AlbStack --require-approval never',
             ],
           },

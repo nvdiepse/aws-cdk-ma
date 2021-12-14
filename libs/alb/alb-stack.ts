@@ -9,10 +9,11 @@ import {
 import { ApplicationLoadBalancer } from '@aws-cdk/aws-elasticloadbalancingv2';
 import * as cdk from '@aws-cdk/core';
 // import { SgAlbStack } from "./sg-alb-stack";
-import { InstanceIdTarget } from '@aws-cdk/aws-elasticloadbalancingv2-targets';
+// import { InstanceIdTarget } from '@aws-cdk/aws-elasticloadbalancingv2-targets';
+import { AutoScalingGroup } from '@aws-cdk/aws-autoscaling';
 export interface AlbStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
-  readonly privateStack: Instance;
+  readonly asg: AutoScalingGroup;
 }
 
 export class AlbStack extends cdk.Stack {
@@ -35,7 +36,7 @@ export class AlbStack extends cdk.Stack {
     // target to the listener.
     listener.addTargets('Alb-target', {
       port: 80,
-      targets: [new InstanceIdTarget(this.props.privateStack.instanceId)],
+      targets: [this.props.asg],
       healthCheck: {
         healthyHttpCodes: '200',
         path: '/',

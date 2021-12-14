@@ -4,6 +4,7 @@ import {
   InstanceClass,
   InstanceSize,
   InstanceType,
+  MachineImage,
   Peer,
   Port,
   SecurityGroup,
@@ -28,8 +29,9 @@ export class AutoScalingGroupStack extends cdk.Stack {
     super(scope, id, props);
     this.props = props;
 
+    const AMI_NAME = <string>process.env.AMI_NAME;
     this.buildSecurityGroup();
-    this.buildAutoScalingGroup();
+    this.buildAutoScalingGroup(AMI_NAME);
   }
 
   private buildSecurityGroup() {
@@ -41,14 +43,16 @@ export class AutoScalingGroupStack extends cdk.Stack {
     this.securityGroup.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
   }
 
-  private buildAutoScalingGroup() {
+  private buildAutoScalingGroup(amiName: string) {
     this.autoscaling = new AutoScalingGroup(this, 'ASG', {
       vpc: this.props.vpc,
       instanceType: InstanceType.of(
         InstanceClass.BURSTABLE2,
         InstanceSize.MICRO,
       ),
-      machineImage: new AmazonLinuxImage(),
+      machineImage: MachineImage.lookup({
+        name: amiName,
+      }),
       securityGroup: this.securityGroup,
       minCapacity: 1,
       maxCapacity: 2,

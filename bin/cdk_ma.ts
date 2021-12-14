@@ -37,13 +37,6 @@ const privateStack = new Ec2PrivateStack(app, 'Ec2PrivateStack', {
   description: 'EC2 PrivateStack',
 });
 
-const albStack = new AlbStack(app, 'AlbStack', {
-  env,
-  vpc: vpcStack.vpc,
-  description: 'AlbStack',
-  privateStack: privateStack.instance,
-});
-
 const codebuild = new CodeBuildStack(app, 'CodeBuildStack', {
   env,
   vpc: vpcStack.vpc,
@@ -59,6 +52,14 @@ const autoScalingGroupStack = new AutoScalingGroupStack(
     description: "AutoScalingGroupAlbStack",
   }
 );
+
+const albStack = new AlbStack(app, 'AlbStack', {
+  env,
+  vpc: vpcStack.vpc,
+  description: 'AlbStack',
+  asg: autoScalingGroupStack.autoscaling
+});
+
 
 const webStack = new WebStack(app, 'WebStack', {
   env,
