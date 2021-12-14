@@ -25,17 +25,17 @@ const vpcStack = new VpcStack(app, 'VpcStack', {
   description: 'Build VPC',
 });
 
-// const bastionStack = new Ec2BastionStack(app, 'Ec2BastionStack', {
-//   env,
-//   vpc: vpcStack.vpc,
-//   description: 'EC2 BastionStack',
-// });
+const bastionStack = new Ec2BastionStack(app, 'Ec2BastionStack', {
+  env,
+  vpc: vpcStack.vpc,
+  description: 'EC2 BastionStack',
+});
 
-// const privateStack = new Ec2PrivateStack(app, 'Ec2PrivateStack', {
-//   env,
-//   vpc: vpcStack.vpc,
-//   description: 'EC2 PrivateStack',
-// });
+const privateStack = new Ec2PrivateStack(app, 'Ec2PrivateStack', {
+  env,
+  vpc: vpcStack.vpc,
+  description: 'EC2 PrivateStack',
+});
 
 const albStack = new AlbStack(app, 'AlbStack', {
   env,
