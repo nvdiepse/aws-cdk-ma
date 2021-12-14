@@ -42,7 +42,7 @@ export class Ec2PrivateStack extends cdk.Stack {
       "yum install -y httpd",
       "systemctl start httpd",
       "systemctl enable httpd",
-      'echo "<h1>Hello World!</h1>" > /var/www/html/index.html'
+      'echo "<h1>private ec2!</h1>" > /var/www/html/index.html'
     );
   }
 
