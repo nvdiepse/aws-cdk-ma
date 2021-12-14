@@ -17,14 +17,14 @@ npm install
 ```
 aws configure
 ```
-## Build CDK
+## Build Vpc
 ```
-cdk deploy --all
+cdk deploy VpcStack
 ```
 
-## Delete
+## Build CodeBuild
 ```
-cdk destroy --all
+cdk deploy CodeBuildStack
 ```
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
