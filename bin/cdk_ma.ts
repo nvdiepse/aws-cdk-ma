@@ -41,28 +41,27 @@ const codebuild = new CodeBuildStack(app, 'CodeBuildStack', {
   env,
   vpc: vpcStack.vpc,
   description: 'Codebuild Stack',
-})
+});
 
 const autoScalingGroupStack = new AutoScalingGroupStack(
   app,
-  "AutoScalingGroupAlbStack",
+  'AutoScalingGroupAlbStack',
   {
     env,
     vpc: vpcStack.vpc,
-    description: "AutoScalingGroupAlbStack",
-  }
+    description: 'AutoScalingGroupAlbStack',
+  },
 );
 
 const albStack = new AlbStack(app, 'AlbStack', {
   env,
   vpc: vpcStack.vpc,
   description: 'AlbStack',
-  asg: autoScalingGroupStack.autoscaling
+  asg: autoScalingGroupStack.autoscaling,
 });
-
 
 const webStack = new WebStack(app, 'WebStack', {
   env,
   vpc: vpcStack.vpc,
   description: 'Web Stack',
-})
+});
