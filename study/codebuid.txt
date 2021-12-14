@@ -15,3 +15,14 @@
         tạo image: tạo ec2 =>
         tạo alb
         tạo autoscaling
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+docker
+Docker file
+=> ecs, eks
+  ecs - chỉ dành cho aws
+  eks - k8s
+
+ECR - Lưu image.

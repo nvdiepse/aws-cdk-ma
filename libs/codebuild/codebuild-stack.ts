@@ -58,12 +58,12 @@ export class CodeBuildStack extends cdk.Stack {
               `export INSTANCE_ID=$(aws cloudformation describe-stacks --stack-name WebStack --output text --query="Stacks[0].Outputs[?OutputKey=='InstanceId'].OutputValue")`,
               'export AMI_NAME=web-ami-$VERSION_ID',
               `export AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name $AMI_NAME --output text)`,
-              'aws ec2 wait image-available --image-ids $AMI_ID', // time init
-              'cdk destroy WebStack --force',
+              `aws ec2 wait image-available --image-ids $AMI_ID`, // time init
               `export WEB_STACK_NAME=WebStack-$VERSION_ID`,
-              'echo INSTANCE_ID = $INSTANCE_ID',
-              'echo AMI_ID = $AMI_ID',
-              'echo WEB_STACK_NAME = $WEB_STACK_NAME',
+              `echo INSTANCE_ID = $INSTANCE_ID`,
+              `echo AMI_ID = $AMI_ID`,
+              `echo WEB_STACK_NAME = $WEB_STACK_NAME`,
+              'cdk destroy WebStack --force',
               'cdk deploy AutoScalingGroupAlbStack --require-approval never',
               'cdk deploy AlbStack --require-approval never',
             ],
@@ -75,8 +75,8 @@ export class CodeBuildStack extends cdk.Stack {
       },
       environmentVariables: {
         VERSION_ID: {
-          value: "YYYYMMDDHHIISS"
-        }
+          value: 'YYYYMMDDHHIISS',
+        },
       },
       projectName: `${getServiceName('codebuild')}`,
       role: adminAccessRole,
