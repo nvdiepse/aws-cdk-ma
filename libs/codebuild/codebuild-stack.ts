@@ -62,7 +62,7 @@ export class CodeBuildStack extends cdk.Stack {
               'cdk destroy WebStack --force',
               `export WEB_STACK_NAME=WebStack-$VERSION_ID`,
               `echo $VERSION_ID`,
-              // 'cdk deploy web-stack --require-approval never',
+              'cdk deploy AlbStack --require-approval never',
             ],
           },
         },
@@ -72,7 +72,7 @@ export class CodeBuildStack extends cdk.Stack {
       },
       environmentVariables: {
         VERSION_ID: {
-          value: "set version here"
+          value: "YYYYMMDDHHIISS"
         }
       },
       projectName: `${getServiceName('codebuild')}`,

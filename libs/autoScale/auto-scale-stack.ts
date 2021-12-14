@@ -1,6 +1,15 @@
-import { AutoScalingGroup } from "@aws-cdk/aws-autoscaling";
-import { AmazonLinuxImage, InstanceClass, InstanceSize, InstanceType, Peer, Port, SecurityGroup, Vpc } from "@aws-cdk/aws-ec2";
-import * as cdk from "@aws-cdk/core";
+import { AutoScalingGroup } from '@aws-cdk/aws-autoscaling';
+import {
+  AmazonLinuxImage,
+  InstanceClass,
+  InstanceSize,
+  InstanceType,
+  Peer,
+  Port,
+  SecurityGroup,
+  Vpc,
+} from '@aws-cdk/aws-ec2';
+import * as cdk from '@aws-cdk/core';
 
 export interface AutoScalingGroupStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
@@ -14,7 +23,7 @@ export class AutoScalingGroupStack extends cdk.Stack {
   constructor(
     scope: cdk.Construct,
     id: string,
-    props: AutoScalingGroupStackProps
+    props: AutoScalingGroupStackProps,
   ) {
     super(scope, id, props);
     this.props = props;
@@ -24,7 +33,7 @@ export class AutoScalingGroupStack extends cdk.Stack {
   }
 
   private buildSecurityGroup() {
-    this.securityGroup = new SecurityGroup(this, "SgForAutoScaling", {
+    this.securityGroup = new SecurityGroup(this, 'SgForAutoScaling', {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });
@@ -33,14 +42,16 @@ export class AutoScalingGroupStack extends cdk.Stack {
   }
 
   private buildAutoScalingGroup() {
-    this.autoscaling = new AutoScalingGroup(this, "ASG", {
+    this.autoscaling = new AutoScalingGroup(this, 'ASG', {
       vpc: this.props.vpc,
       instanceType: InstanceType.of(
         InstanceClass.BURSTABLE2,
-        InstanceSize.MICRO
+        InstanceSize.MICRO,
       ),
       machineImage: new AmazonLinuxImage(),
       securityGroup: this.securityGroup,
+      minCapacity: 1,
+      maxCapacity: 2,
     });
   }
 }
