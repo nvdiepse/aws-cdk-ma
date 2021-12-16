@@ -20,7 +20,7 @@ export interface WebStackProps extends cdk.StackProps {
 
 export class WebStack extends cdk.Stack {
   public instance: Instance;
-  public sgBastion: SecurityGroup;
+  public sg: SecurityGroup;
   public userData: UserData;
   public props: WebStackProps;
 
@@ -29,8 +29,8 @@ export class WebStack extends cdk.Stack {
     this.props = props;
 
     this.initUserData();
-    this.buildSgBastion();
-    this.buildEc2Bastion();
+    this.buildSg);
+    this.buildEc2();
 
     new cdk.CfnOutput(this, 'web-instance-id', {
       value: this.instance.instanceId,
@@ -48,25 +48,25 @@ export class WebStack extends cdk.Stack {
     );
   }
 
-  private buildSgBastion() {
-    this.sgBastion = new SecurityGroup(this, 'SgBastion', {
+  private buildSg() {
+    this.sg = new SecurityGroup(this, 'Sg', {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });
-    this.sgBastion.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
-    this.sgBastion.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
+    this.sg.addIngressRule(Peer.anyIpv4(), Port.tcp(80));
+    this.sg.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
   }
-  private buildEc2Bastion() {
-    this.instance = new Instance(this, 'Ec2 Bastion', {
+  private buildEc2() {
+    this.instance = new Instance(this, 'Ec2', {
       vpc: this.props.vpc,
       vpcSubnets: {
-        subnetType: SubnetType.PUBLIC,
+        subnetType: SubnetType.PRIVATE_WITH_NAT,
       },
       instanceType: InstanceType.of(InstanceClass.T2, InstanceSize.MICRO),
       machineImage: new AmazonLinuxImage({
         generation: AmazonLinuxGeneration.AMAZON_LINUX_2,
       }),
-      securityGroup: this.sgBastion,
+      securityGroup: this.sg,
       keyName: 'aws_diepnv',
       userData: this.userData,
     });

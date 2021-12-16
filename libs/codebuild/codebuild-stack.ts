@@ -8,7 +8,6 @@ import {
   Role,
   ServicePrincipal,
 } from '@aws-cdk/aws-iam';
-import { WebStack } from '../ec2/web-stack';
 
 export interface CodeBuildStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
