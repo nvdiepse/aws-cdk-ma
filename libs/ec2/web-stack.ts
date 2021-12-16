@@ -29,7 +29,7 @@ export class WebStack extends cdk.Stack {
     this.props = props;
 
     this.initUserData();
-    this.buildSg);
+    this.buildSg();
     this.buildEc2();
 
     new cdk.CfnOutput(this, 'web-instance-id', {
