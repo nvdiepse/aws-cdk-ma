@@ -50,7 +50,7 @@ export class WebStack extends cdk.Stack {
       'sudo yum install -y amazon-linux-extras',
       'sudo amazon-linux-extras enable php7.4',
       'sudo yum clean metadata',
-      'sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}',
+      'sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap} --require-approval never',
       'php --version',
       'yum install -y httpd',
       'systemctl start httpd',
