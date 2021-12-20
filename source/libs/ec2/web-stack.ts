@@ -41,6 +41,17 @@ export class WebStack extends cdk.Stack {
     this.userData = UserData.forLinux();
     this.userData.addCommands(
       'sudo -i',
+      'echo "INSTALL NODE"',
+      'curl -sL https://rpm.nodesource.com/setup_14.x | sudo bash -',
+      'sudo yum install -y nodejs',
+      'sudo yum -y install gcc-c++ make',
+      'node -v',
+      'echo "INSTALL PHP"',
+      'sudo yum install -y amazon-linux-extras',
+      'sudo amazon-linux-extras enable php7.4',
+      'sudo yum clean metadata',
+      'sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}',
+      'php --version',
       'yum install -y httpd',
       'systemctl start httpd',
       'systemctl enable httpd',
