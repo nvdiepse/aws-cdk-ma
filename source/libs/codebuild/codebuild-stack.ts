@@ -44,13 +44,9 @@ export class CodeBuildStack extends cdk.Stack {
           build: {
             commands: [
               'echo "=== CODE BUILD ==="',
-              'apt update -y',
               'apt install nodejs -y',
               'npm i -g aws-cdk',
-              'cdk --version',
               'npm i -g typescript',
-              'node --version',
-              'git --version',
               'git clone https://github.com/nvdiepse/aws-cdk-ma.git',
               'cd aws-cdk-ma/source && npm install',
               'cdk deploy WebStack --require-approval never',
@@ -59,9 +55,6 @@ export class CodeBuildStack extends cdk.Stack {
               `export AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name $AMI_NAME --output text)`,
               `aws ec2 wait image-available --image-ids $AMI_ID`, // time init
               `export WEB_STACK_NAME=WebStack-$VERSION_ID`,
-              `echo INSTANCE_ID = $INSTANCE_ID`,
-              `echo AMI_ID = $AMI_ID`,
-              `echo WEB_STACK_NAME = $WEB_STACK_NAME`,
               'cdk destroy WebStack --force',
               'cdk deploy AutoScalingGroupAlbStack --require-approval never',
               'cdk deploy AlbStack --require-approval never',
