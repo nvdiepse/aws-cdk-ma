@@ -1,30 +1,13 @@
 # Aws cdk typescript for Staterit
-
-clone code
-
-## Installation
-install nodejs 
-##
-install aws cli
-##
-install aws cdk
-
-## Run code
+## build image and run local
 ```
-npm install
+bash docker/dev/start.sh
 ```
-## Config account
+## push image to ecr
 ```
-aws configure
+bash push_image_to_ecr.sh
 ```
-## Build Vpc
+## stop docker
 ```
-cdk deploy VpcStack
+bash docker/dev/stop.sh
 ```
-
-## Build CodeBuild
-```
-cdk deploy CodeBuildStack
-```
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
