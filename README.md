@@ -1,5 +1,14 @@
 # Aws cdk typescript for Staterit
-## build image and run local
+
+## create file variable.config
+```
+AWS_ACCOUNT=xxxxx
+AWS_REGION=xxxxx
+AWS_ECR=xxxxx
+SERVICE_NAME=xxxxx
+```
+
+## build image
 ```
 bash docker/dev/start.sh
 ```
