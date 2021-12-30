@@ -9,8 +9,11 @@ RUN yum install -y unzip curl httpd php php-common php-pgsql php-curl php-gd php
 COPY ./etc/httpd/conf.d/vhost.conf /etc/httpd/conf.d/web.conf
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer
+
 WORKDIR /var/www/html
 
-RUN composer install && npm install
+COPY ./src/composer.lock /var/www/html/composer.lock
+COPY ./src/composer.json /var/www/html/composer.json
+RUN composer install
 
 CMD [ "/usr/sbin/httpd", "-D", "FOREGROUND" ]
