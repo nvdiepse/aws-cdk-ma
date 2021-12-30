@@ -43,7 +43,6 @@ export class CodeBuildStack extends cdk.Stack {
         phases: {
           build: {
             commands: [
-              'echo "=== CODE BUILD ==="',
               'apt update -y',
               'apt install nodejs -y',
               'npm i -g aws-cdk',

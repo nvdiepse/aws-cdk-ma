@@ -11,6 +11,7 @@ import {
   Vpc,
 } from '@aws-cdk/aws-ec2';
 import * as cdk from '@aws-cdk/core';
+import { getServiceName } from '../../helper/common';
 
 export interface AutoScalingGroupStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
@@ -35,7 +36,7 @@ export class AutoScalingGroupStack extends cdk.Stack {
   }
 
   private buildSecurityGroup() {
-    this.securityGroup = new SecurityGroup(this, 'SgForAutoScaling', {
+    this.securityGroup = new SecurityGroup(this, getServiceName('sg-auto-scale'), {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });

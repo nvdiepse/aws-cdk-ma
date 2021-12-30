@@ -13,6 +13,7 @@ import {
   Vpc,
 } from '@aws-cdk/aws-ec2';
 import * as cdk from '@aws-cdk/core';
+import { getServiceName } from '../../helper/common';
 
 export interface Ec2BastionStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
@@ -44,7 +45,7 @@ export class Ec2BastionStack extends cdk.Stack {
   }
 
   private buildSgBastion() {
-    this.sgBastion = new SecurityGroup(this, 'SgBastion', {
+    this.sgBastion = new SecurityGroup(this, getServiceName('sg-bastion'), {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });

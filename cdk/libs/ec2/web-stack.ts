@@ -13,6 +13,7 @@ import {
   Vpc,
 } from '@aws-cdk/aws-ec2';
 import * as cdk from '@aws-cdk/core';
+import { getServiceName } from '../../helper/common';
 
 export interface WebStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
@@ -60,7 +61,7 @@ export class WebStack extends cdk.Stack {
   }
 
   private buildSg() {
-    this.sg = new SecurityGroup(this, 'Sg', {
+    this.sg = new SecurityGroup(this, getServiceName('sg-for-web'), {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });

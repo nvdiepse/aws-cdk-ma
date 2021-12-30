@@ -13,10 +13,7 @@ import {
   Vpc,
 } from "@aws-cdk/aws-ec2";
 import * as cdk from "@aws-cdk/core";
-// import { SgAlbStack } from "../alb/sg-alb-stack";
-import { Ec2BastionStack } from "../ec2/ec2-bastion-stack";
-// import * as Ec2BastionStack from "../ec2/ec2-bastion-stack";
-
+import { getServiceName } from "../../helper/common";
 export interface Ec2PrivateStackProps extends cdk.StackProps {
   readonly vpc: Vpc;
 }
@@ -47,18 +44,16 @@ export class Ec2PrivateStack extends cdk.Stack {
   }
 
   private buildSgPrivate() {
-    this.sgPrivate = new SecurityGroup(this, "SgPrivate", {
+    this.sgPrivate = new SecurityGroup(this, getServiceName("sg-private"), {
       vpc: this.props.vpc,
       allowAllOutbound: true,
     });
     this.sgPrivate.addIngressRule(Peer.anyIpv4(), Port.tcp(22));
     this.sgPrivate.connections.allowFrom(
-      // Ec2BastionStack.prototype.sgBastion,
       Peer.anyIpv4(),
       Port.tcp(22)
     );
     this.sgPrivate.connections.allowFrom(
-      // SgAlbStack.prototype.securityGroup,
       Peer.anyIpv4(),
       Port.tcp(80)
     );
