@@ -55,8 +55,8 @@ const albStack = new AlbStack(app, 'AlbStack', {
   asg: autoScalingGroupStack.autoscaling,
 });
 
-const ec2Stack = new EcsStack(app, 'EC2Stack', {
-  env,
-  vpc: vpcStack.vpc,
-  description: 'ECSStack',
-});
+// const ec2Stack = new EcsStack(app, 'EC2Stack', {
+//   env,
+//   vpc: vpcStack.vpc,
+//   description: 'ECSStack',
+// });
