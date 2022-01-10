@@ -1,17 +1,12 @@
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import { VpcStack } from '../libs/vpc/vpc-stack';
-// import { SgStack } from "../libs/vpc/sg-stack";
-
-// import { Peer, Port } from "@aws-cdk/aws-ec2";
-// import { Ec2Stack } from "../libs/ec2/ec2-stack";
 import { Ec2BastionStack } from '../libs/ec2/ec2-bastion-stack';
 import { Ec2PrivateStack } from '../libs/ec2/ec2-private-stack';
 import { AlbStack } from '../libs/alb/alb-stack';
 import { CodeBuildStack } from '../libs/codebuild/codebuild-stack';
-import { WebStack } from '../libs/ec2/web-stack';
 import { AutoScalingGroupStack } from '../libs/autoScale/auto-scale-stack';
-// import { AutoScalingGroupStack } from '../libs/autoScale/auto-scale-stack';
+import { EcsStack } from '../libs/ecs/ecs-stack';
 
 const app = new cdk.App();
 
@@ -60,8 +55,8 @@ const albStack = new AlbStack(app, 'AlbStack', {
   asg: autoScalingGroupStack.autoscaling,
 });
 
-const webStack = new WebStack(app, 'WebStack', {
+const ec2Stack = new EcsStack(app, 'EC2Stack', {
   env,
   vpc: vpcStack.vpc,
-  description: 'Web Stack',
+  description: 'ECSStack',
 });
